@@ -11,11 +11,11 @@ class Settings:
     DEBUG: bool = bool(os.getenv("DEBUG", False))
 
     # Databse connection (PostgreSQL - Sync with psycopg2)
-    DB_USER: str = os.getenv("POSTGRES_USER")
-    DB_PASSWORD: str = os.getenv("POSTGRES_PASSWORD")
-    DB_HOST: str = os.getenv("DB_HOST")
-    DB_PORT: str = os.getenv("DB_PORT")
-    DB_NAME: str = os.getenv("DB_NAME")
+    DB_USER: str = os.getenv("POSTGRES_USER", "postgres")
+    DB_PASSWORD: str = os.getenv("POSTGRES_PASSWORD", "")
+    DB_HOST: str = os.getenv("POSTGRES_HOST", "localhost")
+    DB_PORT: int = int(os.getenv("POSTGRES_PORT", 5432))
+    DB_NAME: str = os.getenv("POSTGRES_DB", "tasks_api")
     DATABASE_URL: str = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
     # Auth (JWT)
@@ -25,6 +25,9 @@ class Settings:
 
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+
+    if None in [DB_USER, DB_PASSWORD, DB_HOST, DB_NAME]:
+        raise ValueError("Variáveis de banco de dados ausentes no .env!")
 
 # Instantiate the config
 settings = Settings()

@@ -2,4 +2,10 @@
 .vscode
 .env
 servers.session.sql
-__pycache__.py
+
+app/__pycache__/
+app/models/__pycache__
+
+alembic.ini
+migrations/*pyc
+migrations/__pycache__
